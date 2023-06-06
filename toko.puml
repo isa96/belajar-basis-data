@@ -1,0 +1,76 @@
+@startuml
+
+entity Produk {
+    kode : text <PK>
+    --
+    nama : text
+    berat : number
+    harga : number
+}
+
+entity Order {
+    kode : text <PK>
+    --
+    kode_pembeli : text <FK>
+    kode_alamat : text <FK>
+    kode_metode_pembayaran : text <FK>
+    kode_kurir : text <FK>
+    --
+    tanggal : date
+    total_ongkos : number
+    biaya_jasa : number
+}
+
+entity DetailOrder {
+    kode_produk : text <PK> <FK>
+    kode_order : text <PK> <FK>
+    --
+    jumlah : number
+}
+
+entity Pembeli {
+    kode : text <PK>
+    --
+    nama : text
+}
+
+entity Penjual {
+    kode : text <PK>
+    --
+    nama : text
+}
+
+entity Alamat{
+    kode : text <PK>
+    --
+    kode_pembeli : text <FK>
+    --
+    nama : text
+    alamat : text
+    kode_pos : text
+    kota : text
+    provinsi : text
+    negara : text
+}
+
+entity MetodePembayaran {
+    kode : text <PK>
+    --
+    nama : text
+}
+
+entity Kurir {
+    kode : text <PK>
+    --
+    nama : text
+}
+
+Order ||--|{ DetailOrder
+DetailOrder ||--|{ Produk
+Pembeli ||--o{ Alamat
+Alamat ||--o{ Order
+Penjual ||--o{ Produk
+MetodePembayaran ||--o{ Order
+Kurir ||--o{ Order
+
+@enduml

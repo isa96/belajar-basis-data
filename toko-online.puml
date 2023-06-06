@@ -1,0 +1,99 @@
+@startuml
+
+entity Pembeli {
+    email : text <PK>
+    --
+    nama : text
+}
+
+entity Bank {
+    kode : text <PK>
+    --
+    nama : text
+}
+
+entity Penjual {
+    email : text <PK>
+    --
+    nama : text
+}
+
+entity Dompet {
+    email : text <PK>
+    --
+    email_pembeli : text <FK>
+    --
+    saldo : number
+}
+
+entity Alamat {
+    kode : text <PK>
+    --
+    email_pembeli : text <FK>
+    --
+    jalan : text
+    kota : text
+    provinsi : text
+}
+
+entity Barang {
+    sku : text <PK>
+    --
+    email_penjual : text <FK>
+    --
+    nama : text
+    harga : number
+}
+
+entity BarangLaptop {
+    sku : text <PK>
+    --
+    cpu : text
+    ram : text
+    disk : text
+}
+
+entity BarangPakaian {
+    sku : text <PK>
+    --
+    ukuran : text
+    warna : text
+}
+
+object Membeli {
+    sku: text <FK>
+    email_pembeli : text <FK>
+    kode_bank : text <FK>
+    --
+    jumlah : number
+}
+
+Pembeli ||--o| Dompet
+note on link
+    Memiliki
+end note
+Pembeli ||--o{ Alamat
+note on link
+    Memiliki
+end note
+Pembeli }o-- Membeli
+Barang }|-- Membeli
+Bank }|-- Membeli
+Pembeli }o--o{ Barang
+note on link
+    Menyukai
+end note
+Barang ||--o| BarangLaptop
+note on link
+    ISA
+end note
+Barang ||--o| BarangPakaian
+note on link
+    ISA
+end note
+Penjual ||--o{ Barang
+note on link
+    Menjual
+end note
+
+@enduml
